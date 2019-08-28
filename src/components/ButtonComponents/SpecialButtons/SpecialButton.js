@@ -4,7 +4,7 @@ const SpecialButton = (props) => {
   return (
     <>
       {/* Display a button element rendering the data being passed down from the parent container on props */}
-      <button>{props.text}</button>
+      <button  onClick = {() => props.addSpecial(props.special)}>{props.special}</button>
     </>
   );
 };

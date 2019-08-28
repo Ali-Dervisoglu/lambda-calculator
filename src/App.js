@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 // STEP 4 - import the button and display components
 // Don't forget to import any extra css/scss files you build into the correct component
 
 // Logo has already been provided for you. Do the same for the remaining components
-import Logo from "./components/DisplayComponents/Logo"; 
+import Logo from "./components/DisplayComponents/Logo";
 import Display from "./components/DisplayComponents/Display";
 import Numbers from "./components/ButtonComponents/NumberButtons/Numbers";
 import Specials from "./components/ButtonComponents/SpecialButtons/Specials";
@@ -18,14 +18,43 @@ function App() {
   // the "5" button, or the operator if they click one of those buttons) and then call your setter function to update state.
   // Don't forget to pass the functions (and any additional data needed) to the components as props
 
+  const [displayValue, setDisplayValue] = useState("");
+  const addNumber = (number) => {
+    setDisplayValue(displayValue => displayValue + number);
+  };
+
+  const addOperator = (operator) => {
+    if (operator === "=") {
+      setDisplayValue(displayValue => eval(displayValue));
+    }
+    else {
+      setDisplayValue(displayValue => displayValue + " " + operator + " ");
+    }
+  };
+
+  const addSpecial = (special) => {
+    if (special == "C"){
+      setDisplayValue(()=>"");
+    }
+    else if (special == "+/-"){
+      setDisplayValue(displayValue => (-displayValue))
+    }
+    else {
+      setDisplayValue (displayValue => (displayValue/100));
+    }
+  }
+
+
+
   return (
     <div className="container">
       <Logo />
       <div className="App">
         {/* STEP 4 - Render your components here and be sure to properly import/export all files */}
-        <Numbers />
-        <Specials />
-        <Operators />
+        <Display number={displayValue} />
+        <Numbers addNumber={addNumber} />
+        <Specials addSpecial={addSpecial}/>
+        <Operators addOperator={addOperator} />
       </div>
     </div>
   );
